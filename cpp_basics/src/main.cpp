@@ -16,10 +16,10 @@ int main() {
     const double l2 = 0.20;
 
     // 第一个关节的角度，单位是度。
-    const double theta1_deg = 0.0;
+    const double theta1_deg = 30.0;
 
     // 第二个关节的角度，单位是度。
-    const double theta2_deg = 0.0;
+    const double theta2_deg = 45.0;
     
     // 调用2R正运动学函数，计算末端执行器的坐标。
     const Eigen::Vector2d position = compute_2r_forward_kinematics(
