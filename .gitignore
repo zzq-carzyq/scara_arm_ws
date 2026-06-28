@@ -1,2 +1,7 @@
 # Build outputs
 cpp_basics/forward_kinematics
+
+# 忽略 CMake 在 cpp_basics 里生成的构建目录。
+# build/ 里面是编译中间文件和可执行程序，可以随时重新生成，不需要提交到 Git。
+cpp_basics/build/
+
