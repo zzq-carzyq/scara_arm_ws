@@ -5,3 +5,7 @@ cpp_basics/forward_kinematics
 # build/ 里面是编译中间文件和可执行程序，可以随时重新生成，不需要提交到 Git。
 cpp_basics/build/
 
+# ROS2/colcon build outputs.
+build/
+install/
+log/
