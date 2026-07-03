@@ -31,16 +31,23 @@ private:
 
     double joint1_position_ = 0.0;
 
+    int publish_count_ = 0;
+
     void publish_joint_state()
     {
         sensor_msgs::msg::JointState msg;
         msg.header.stamp = this->now();
         msg.name = {"joint1", "joint2", "joint_z", "joint_tool"};
         joint1_position_ += 0.1;
+        publish_count_ ++;
         msg.position = {joint1_position_, 0.0, 0.0, 0.0};
 
         joint_state_publisher_->publish(msg);
-        RCLCPP_INFO(this->get_logger(), "Publish SCARA joint state.");
+
+        if (publish_count_ % 10 == 0) {
+            RCLCPP_INFO(this->get_logger(), "Publish %d SCARA joint state messages." , publish_count_ );
+        }  
+
     }
 
     rclcpp::TimerBase::SharedPtr timer_;
