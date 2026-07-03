@@ -9,12 +9,14 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 add_executable(scara_status_node src/scara_status_node.cpp)
 
 ament_target_dependencies(scara_status_node
   rclcpp
   std_msgs
+  sensor_msgs
 )
 
 install(TARGETS
