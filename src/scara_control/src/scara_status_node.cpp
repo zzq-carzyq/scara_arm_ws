@@ -30,6 +30,7 @@ private:
     }
 
     double joint1_position_ = 0.0;
+    double joint2_position_ = 0.0;
 
     int publish_count_ = 0;
 
@@ -39,8 +40,9 @@ private:
         msg.header.stamp = this->now();
         msg.name = {"joint1", "joint2", "joint_z", "joint_tool"};
         joint1_position_ += 0.1;
+        joint2_position_ -= 0.05;
         publish_count_ ++;
-        msg.position = {joint1_position_, 0.0, 0.0, 0.0};
+        msg.position = {joint1_position_, joint2_position_, 0.0, 0.0};
 
         joint_state_publisher_->publish(msg);
 

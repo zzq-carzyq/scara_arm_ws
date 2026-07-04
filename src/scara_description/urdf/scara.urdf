@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!-- 最小 SCARA 机器人结构说明书：只用于 RViz 可视化，不做物理仿真-->
+<robot name="scara_arm">
+
+    <!-- 底座 link：机器人固定参考部分 -->
+    <link name="base_link">
+      <visual>
+        <geometry>
+          <cylinder radius="0.08" length="0.05"/>
+        </geometry>
+        <origin xyz="0 0 0.025" rpy="0 0 0"/>
+      </visual>
+    </link>
+
+    <!-- 第一段机械臂 -->
+    <link name="link1">
+      <visual>
+        <geometry>
+          <box size="0.30 0.04 0.04"/>
+        </geometry>
+        <!-- box 默认中心在自身原点；这里让它从 joint1 往 x 方向伸出0.3m -->
+        <origin xyz="0.15 0 0" rpy="0 0 0"/>
+      </visual>
+    </link>
+
+    <!-- 第二段机械臂 -->
+    <link name="link2">
+      <visual>
+        <geometry>
+          <box size="0.20 0.035 0.035"/>
+        </geometry>
+        <origin xyz="0.10 0 0" rpy="0 0 0"/>
+      </visual>
+    </link>
+
+    <!-- Z 轴升降部分 -->
+    <link name="z_link">
+      <visual>
+        <geometry>
+          <cylinder radius="0.025" length="0.12"/>
+        </geometry>
+        <origin xyz="0 0 -0.06" rpy="0 0 0"/>
+      </visual>
+    </link>
+
+    <!-- 末端工具 -->
+    <link name="tool_link">
+      <visual>
+        <geometry>
+          <box size="0.06 0.03 0.03"/>
+        </geometry>
+        <origin xyz="0.03 0 0" rpy="0 0 0"/>
+      </visual>
+    </link>
+
+    <!-- joint1 名字必须和 /joint_states 里的 name[0] 对上 -->
+    <joint name="joint1" type="revolute">
+      <parent link="base_link"/>
+      <child link="link1"/>
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-3.14" upper="3.14" effort="10" velocity="1"/>
+    </joint>
+
+    <!-- joint2 名字必须和 /joint_states 里的 name[1] 对上 -->
+    <joint name="joint2" type="revolute">
+      <parent link="link1"/>
+      <child link="link2"/>
+      <origin xyz="0.30 0 0" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-3.14" upper="3.14" effort="10" velocity="1"/>
+    </joint>
+
+    <!-- joint_z 名字必须和 /joint_states 里的 name[2] 对上 -->
+    <joint name="joint_z" type="prismatic">
+      <parent link="link2"/>
+      <child link="z_link"/>
+      <origin xyz="0.20 0 0" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-0.20" upper="0.00" effort="10" velocity="0.1"/>
+    </joint>
+
+    <!-- joint_tool 名字必须和 /joint_states 里的 name[3] 对上 -->
+    <joint name="joint_tool" type="revolute">
+      <parent link="z_link"/>
+      <child link="tool_link"/>
+      <origin xyz="0 0 -0.12" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-3.14" upper="3.14" effort="5" velocity="1"/>
+    </joint>
+
+</robot>
